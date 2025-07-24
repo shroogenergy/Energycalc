@@ -194,3 +194,118 @@
   </script>
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Energy App by Shroog</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #e6f5ea, #ffffff);
+      color: #2e7d32;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .score-circle {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: #a5d6a7;
+      color: white;
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px auto;
+      box-shadow: 0 4px 20px rgba(0, 128, 0, 0.2);
+      animation: pulse 3s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .score-box {
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    .score-box h2 {
+      font-size: 36px;
+      margin-top: 10px;
+    }
+
+    .score-box p {
+      font-size: 20px;
+    }
+
+    .share-button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      background-color: #66bb6a;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 16px;
+      color: #388e3c;
+    }
+
+    @keyframes fadeIn {
+      0% {opacity: 0;}
+      100% {opacity: 1;}
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🌱 Smart Energy Score</h1>
+
+  <div class="score-circle" id="scoreCircle">0%</div>
+
+  <div class="score-box">
+    <h2 id="finalScoreText">Your Score: 85%</h2>
+    <p>Great job! You're making strong efforts toward sustainability!</p>
+    <p>🌍 Weekly Tip: Try turning off unused lights this week.</p>
+    <button class="share-button" onclick="shareScore()">Share My Score</button>
+  </div>
+
+  <div class="footer">
+    Designed and Created by Shroog 🌿
+  </div>
+
+  <script>
+    let targetScore = 85;
+    let currentScore = 0;
+    let interval = setInterval(() => {
+      if (currentScore < targetScore) {
+        currentScore++;
+        document.getElementById("scoreCircle").innerText = currentScore + "%";
+      } else {
+        clearInterval(interval);
+      }
+    }, 40);
+
+    function shareScore() {
+      alert("You can now share your score on social media or save it as a screenshot!");
+    }
+  </script>
+
+</body>
+</html>
