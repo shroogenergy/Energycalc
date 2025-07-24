@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Smart Energy Score – By Shroog</title>
+<style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom right, #e8f5e9, #ffffff);
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    header {
+      background-color: #388e3c;
+      color: white;
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .container {
+      margin: 30px auto;
+      padding: 20px;
+      max-width: 600px;
+      background: #f1f8e9;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #c8e6c9;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+    input {
+      width: 80%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #c8e6c9;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #43a047;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .score-circle {
+      margin: 30px auto;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: #c5e1a5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      font-weight: bold;
+      color: #1b5e20;
+      box-shadow: 0 0 15px #aed581 inset;
+    }
+    .recommendation {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #33691e;
+    }
+    footer {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #789262;
+    }
+  </style>
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eefcf0;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .container {
+            margin-top: 40px;
+        }
+        .score-result {
+            font-size: 28px;
+            margin: 20px 0;
+            color: #007744;
+        }
+        .green-badge {
+            display: none;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 25px;
+            font-size: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .fun-fact, .weekly-challenge {
+            background-color: #dff0d8;
+            margin: 20px auto;
+            width: 80%;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 18px;
+        }
+        .share-button {
+            margin-top: 30px;
+            background-color: #008CBA;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            text-decoration: none;
+        }
+    </style></head>
+<body>
+<header>🌿 Smart Energy Score – By Shroog</header>
+<div class="container">
+<label>How many air conditioners do you have?</label>
+<select name=""><option value="Yes">Yes</option><option value="No">No</option><option value="More than 5">More than 5</option></select>
+<label>How many solar panels?</label>
+<select name=""><option value="Yes">Yes</option><option value="No">No</option><option value="More than 5">More than 5</option></select>
+<label>How many trees around your building?</label>
+<select name=""><option value="Yes">Yes</option><option value="No">No</option><option value="More than 5">More than 5</option></select>
+<label>How many LED lights are used?</label>
+<select name=""><option value="Yes">Yes</option><option value="No">No</option><option value="More than 5">More than 5</option></select>
+<label>Do you use sustainable transportation? (1 = Yes, 0 = No)</label>
+<select name=""><option value="Yes">Yes</option><option value="No">No</option><option value="More than 5">More than 5</option></select>
+<button onclick="calculateScore()">Get My Score</button>
+<div class="score-circle" id="scoreDisplay">0%</div>
+<div class="recommendation" id="recommendationText"></div>
+</div>
+<footer>© 2025 By Shroog | Green Energy for a Better Future</footer>
+<script>
+    function calculateScore() {
+      const ac = parseInt(document.getElementById("ac").value) || 0;
+      const solar = parseInt(document.getElementById("solar").value) || 0;
+      const trees = parseInt(document.getElementById("trees").value) || 0;
+      const led = parseInt(document.getElementById("led").value) || 0;
+      const transport = parseInt(document.getElementById("transport").value) || 0;
+
+      // Simple scoring formula
+      let score = (solar * 5 + trees * 3 + led * 2 + transport * 10) - ac * 4;
+      if (score < 0) score = 0;
+      if (score > 100) score = 100;
+
+      document.getElementById("scoreDisplay").innerText = score + "%";
+
+      let recommendation = "";
+      if (score >= 80) {
+        recommendation = "Excellent! Your energy profile is very sustainable 🌟";
+      } else if (score >= 60) {
+        recommendation = "Good! You can still improve your energy efficiency.";
+      } else {
+        recommendation = "Try adding more solar or trees, and reduce AC usage.";
+      }
+
+      document.getElementById("recommendationText").innerText = recommendation;
+    }
+  </script>
+
+
+
+</body>
+</html>
