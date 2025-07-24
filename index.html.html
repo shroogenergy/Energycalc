@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Smart Energy Score</title>
+<style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4fff4;
+      color: #004d00;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #2e7d32;
+    }
+    .calculator {
+      background: white;
+      padding: 30px;
+      margin: auto;
+      width: 80%;
+      max-width: 500px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 128, 0, 0.2);
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, select {
+      padding: 8px;
+      margin-top: 5px;
+      width: 90%;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 30px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .score-output {
+      margin-top: 30px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      margin: 20px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: bold;
+      background-color: #e8f5e9;
+      border: 6px solid #4caf50;
+      color: #2e7d32;
+    }
+  </style>
+</head>
+<body><style>
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom right, #e5f8f5, #ffffff);
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  color: #333;
+}
+.container {
+  max-width: 500px;
+  margin: auto;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  margin-top: 40px;
+}
+h1 {
+  font-size: 26px;
+  margin-bottom: 10px;
+  color: #00796b;
+}
+form input, form select {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+button {
+  padding: 12px 25px;
+  background-color: #00796b;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+button:hover {
+  background-color: #004d40;
+}
+#circle {
+  font-size: 50px;
+  margin-top: 20px;
+  font-weight: bold;
+  color: #388e3c;
+}
+#recommendations {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 12px;
+  background-color: #e0f2f1;
+  color: #004d40;
+  font-size: 16px;
+}
+</style><div class="container">
+<img src="https://cdn-icons-png.flaticon.com/512/1042/1042269.png" style="margin-bottom: 10px;" width="60"/><h1>Smart Energy Score Calculator</h1>
+<div class="calculator">
+<label for="energy">Monthly Energy Consumption (kWh)</label>
+<input id="energy" placeholder="e.g., 450" type="number"/>
+<label for="solar">Do you use solar panels?</label>
+<select id="solar">
+<option value="yes">Yes</option>
+<option value="no">No</option>
+</select>
+<label for="insulation">Home Insulated?</label>
+<select id="insulation">
+<option value="yes">Yes</option>
+<option value="no">No</option>
+</select>
+<label for="transport">Primary Transportation</label>
+<select id="transport">
+<option value="electric">Electric Vehicle</option>
+<option value="hybrid">Hybrid</option>
+<option value="gas">Gasoline/Diesel</option>
+<option value="public">Public Transport</option>
+</select>
+<button onclick="calculateScore()">Calculate Score</button>
+<div class="score-output" id="result"></div>
+<div class="circle" id="circle">0%</div>
+</div>
+
+<div id="recommendations" style="margin-top: 30px; font-size: 16px;">Recommendations will appear here based on your score.</div></div><script>
+    function calculateScore() {
+      const energy = parseInt(document.getElementById('energy').value);
+      const solar = document.getElementById('solar').value;
+      const insulation = document.getElementById('insulation').value;
+      const transport = document.getElementById('transport').value;
+
+      let score = 100;
+
+      if (energy > 600) {
+        score -= 30;
+      } else if (energy > 400) {
+        score -= 20;
+      } else if (energy > 250) {
+        score -= 10;
+      }
+
+      if (solar === 'no') score -= 15;
+      if (insulation === 'no') score -= 10;
+
+      switch (transport) {
+        case 'gas':
+          score -= 25;
+          break;
+        case 'hybrid':
+          score -= 10;
+          break;
+        case 'electric':
+          score += 10;
+          break;
+        case 'public':
+          score += 5;
+          break;
+      }
+
+      if (score < 0) score = 0;
+      if (score > 100) score = 100;
+
+      document.getElementById('result').innerText = "Your Smart Energy Score is: " + score + "%";
+      document.getElementById('circle').innerText = score + "%";
+  showRecommendations(score);
+
+      const circle = document.getElementById('circle');
+      if (score > 80) {
+        circle.style.borderColor = "#2e7d32";
+        circle.style.color = "#2e7d32";
+      } else if (score > 50) {
+        circle.style.borderColor = "#fbc02d";
+        circle.style.color = "#fbc02d";
+      } else {
+        circle.style.borderColor = "#d32f2f";
+        circle.style.color = "#d32f2f";
+      }
+    }
+  </script><script>
+function showRecommendations(score) {
+  const rec = document.getElementById("recommendations");
+  if (score > 80) {
+    rec.innerText = "🌟 Excellent! Keep using green energy and efficient transport.";
+  } else if (score > 50) {
+    rec.innerText = "👍 Good effort. Consider installing solar panels and reducing energy usage.";
+  } else {
+    rec.innerText = "⚠️ High improvement needed. Switch to renewable energy and improve home insulation.";
+  }
+}
+</script></body>
+</html>
