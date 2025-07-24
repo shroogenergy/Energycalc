@@ -206,3 +206,61 @@
   </script>
 </body>
 </html>
+/div>
+
+  <!-- Tree Animation -->
+  <div id="treeSection" style="display:none; margin-top:30px;">
+    <svg width="100" height="120">
+      <rect x="45" y="40" width="10" height="40" fill="#8d6e63">
+        <animate attributeName="y" from="120" to="40" dur="1.5s" fill="freeze" />
+      </rect>
+      <circle cx="50" cy="30" r="0" fill="#66bb6a">
+        <animate attributeName="r" from="0" to="20" dur="1.5s" fill="freeze" />
+      </circle>
+    </svg>
+    <p id="tipText" style="font-size: 1.2rem; margin-top: 15px;"></p>
+  </div>
+
+  <div class="footer">Designed and Created by Shroog 🌿</div>
+
+  <script>
+    function calculateScore() {
+      let score = 100;
+
+      if (document.getElementById('ac').value === '4+') score -= 25;
+      if (document.getElementById('solar').value === '0') score -= 20;
+      if (document.getElementById('trees').value === '0') score -= 15;
+      if (document.getElementById('led').value === '0') score -= 15;
+      if (document.getElementById('transport').value === 'no') score -= 10;
+
+      score = Math.max(score, 0);
+
+      document.getElementById('scoreDisplay').innerText = score + "%";
+      document.getElementById('resultBox').style.display = 'block';
+      document.getElementById('resultText').innerText = "Your Score: " + score + "%";
+
+      let feedback = "", tip = "";
+      if (score >= 80) {
+        feedback = "🌿 Great job! You're making strong efforts toward sustainability!";
+        tip = "🌱 Tip: Maintain your green habits!";
+      } else if (score >= 50) {
+        feedback = "✨ Good! But there’s room for improvement.";
+        tip = "🌿 Tip: Try using LED lights or installing solar panels.";
+      } else {
+        feedback = "🔧 Consider small changes to improve your energy footprint.";
+        tip = "💡 Tip: Start small — unplug unused electronics.";
+      }
+
+      document.getElementById('feedback').innerText = feedback;
+      document.getElementById('tipText').innerText = tip;
+      document.getElementById('treeSection').style.display = 'block';
+    }
+
+    function shareScore() {
+      const score = document.getElementById("scoreDisplay").innerText;
+      const message = `🌿 My Smart Energy Score is ${score}! How smart are you?`;
+      alert(message);
+    }
+  </script>
+</body>
+</html>
