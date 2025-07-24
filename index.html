@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -103,6 +102,11 @@
       border-radius: 8px;
     }
 
+    .suggestion {
+      font-size: 1.1rem;
+      margin-top: 15px;
+      color: #33691e;
+    }
   </style>
 </head>
 <body>
@@ -138,6 +142,9 @@
     <button class="share-btn" type="button" onclick="shareScore()">Share My Score</button>
   </form>
 
+  <div class="score-circle" id="finalScore" style="display:none;">--%</div>
+  <div class="suggestion" id="suggestionText" style="display:none;"></div>
+
   <div class="fact-box" id="energyFact" style="display:none;">
     💡 Did you know? Turning off devices can save up to 10% of your electricity bill.
   </div>
@@ -149,54 +156,35 @@
 
       selects.forEach(select => {
         const value = select.value;
-        if (value === "no" || value === "4+") score -= 25;
+        if (value === "no") score -= 25;
+        if (value === "4+") score -= 15;
       });
 
-      const scoreDisplay = document.getElementById("scoreDisplay");
-      scoreDisplay.innerText = score + "%";
+      score = Math.max(score, 0);
+      document.getElementById("scoreDisplay").innerText = score + "%";
+      document.getElementById("finalScore").innerText = score + "%";
+      document.getElementById("finalScore").style.display = "flex";
 
-      const factBox = document.getElementById("energyFact");
-      factBox.style.display = "block";
+      let suggestion = "";
+      if (score >= 80) {
+        suggestion = "🌱 Excellent! You're very sustainable!";
+      } else if (score >= 50) {
+        suggestion = "✨ Good! But there’s room for improvement.";
+      } else {
+        suggestion = "🔧 Consider small sustainable changes.";
+      }
+
+      document.getElementById("suggestionText").innerText = suggestion;
+      document.getElementById("suggestionText").style.display = "block";
+
+      document.getElementById("energyFact").style.display = "block";
     }
 
     function shareScore() {
       const score = document.getElementById("scoreDisplay").innerText;
       const message = `🌿 I just got a Smart Energy Score of ${score}! How energy smart are you?`;
-      alert("Share this on your favorite social platform:
-
-" + message);
+      alert("Share this message on your favorite social platform:\n\n" + message);
     }
   </script>
-
-<div id="result-container" style="display:none; text-align:center; margin-top:20px;">
-  <h2 id="score-display" style="color:#2e7d32; font-size:24px;"></h2>
-  <p id="suggestions" style="font-size:18px;"></p>
-</div>
-
-<script>
-function calculateScore() {
-  let score = 0;
-  const questions = document.querySelectorAll('input[type="radio"]:checked');
-  questions.forEach(q => {
-    if (q.value === "yes") score += 20;
-    if (q.value === "more_than_5") score += 10;
-  });
-
-  const percentage = Math.min(Math.round((score / (questions.length * 20)) * 100), 100);
-  document.getElementById("score-display").textContent = "Your Smart Energy Score: " + percentage + "%";
-
-  let suggestion = "";
-  if (percentage >= 80) {
-    suggestion = "🌿 Excellent! You're very sustainable! 🌱";
-  } else if (percentage >= 50) {
-    suggestion = "✨ Good! But there’s room for improvement.";
-  } else {
-    suggestion = "🔧 Consider small sustainable changes.";
-  }
-
-  document.getElementById("suggestions").textContent = suggestion;
-  document.getElementById("result-container").style.display = "block";
-}
-</script>
 </body>
 </html>
