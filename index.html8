@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Energy Calculator</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f9fdfc;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+    }
+
+    header img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    .inputs, .results {
+      margin-top: 30px;
+    }
+
+    .inputs input {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 12px 24px;
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .score-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 10px solid #4caf50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin: 0 auto;
+    }
+
+    #scoreText {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .recommendations ul {
+      padding-left: 20px;
+      list-style-type: disc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Smart Energy Calculator</h1>
+      <img src="https://www.energy.gov/sites/default/files/styles/full_article_width/public/2021-09/solar_panels_wind_turbine.jpg" alt="Solar panels and wind turbine" />
+    </header>
+
+    <main>
+      <section class="inputs">
+        <h2>Energy & Water Usage Analysis</h2>
+        <input type="number" id="occupants" placeholder="Number of occupants" />
+        <input type="number" id="homeSize" placeholder="Home size (sq ft)" />
+        <input type="number" id="appliances" placeholder="Number of appliances" />
+        <input type="number" id="acUnits" placeholder="Number of AC units" />
+        <button onclick="calculateScore()">Calculate</button>
+      </section>
+
+      <section class="results">
+        <h2>My Sustainability Score</h2>
+        <div class="score-container">
+          <div class="circle">
+            <span id="scoreValue">--%</span>
+          </div>
+          <div id="scoreText">Your score will appear here.</div>
+        </div>
+        <div class="recommendations">
+          <h3>Recommendations</h3>
+          <ul id="recommendList"></ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function calculateScore() {
+      const occupants = parseInt(document.getElementById("occupants").value) || 0;
+      const homeSize = parseInt(document.getElementById("homeSize").value) || 0;
+      const appliances = parseInt(document.getElementById("appliances").value) || 0;
+      const acUnits = parseInt(document.getElementById("acUnits").value) || 0;
+
+      let score = 100 - (occupants * 2 + homeSize / 50 + appliances * 1.5 + acUnits * 3);
+      score = Math.max(0, Math.min(score, 100));
+
+      document.getElementById("scoreValue").textContent = score + "%";
+      document.querySelector(".circle").style.borderColor = score > 75 ? "#4caf50" : score > 50 ? "#ffc107" : "#f44336";
+      document.getElementById("scoreText").textContent = score > 75
+        ? "Excellent! 🌿"
+        : score > 50
+        ? "Good, but can improve."
+        : "Needs improvement.";
+
+      const recommendList = document.getElementById("recommendList");
+      recommendList.innerHTML = "";
+      if (acUnits > 2) recommendList.innerHTML += "<li>Use fewer or energy-efficient AC units.</li>";
+      if (appliances > 10) recommendList.innerHTML += "<li>Unplug unused appliances.</li>";
+      if (homeSize > 1500) recommendList.innerHTML += "<li>Install solar panels to offset footprint.</li>";
+    }
+  </script>
+</body>
+</html>
